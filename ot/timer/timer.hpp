@@ -65,6 +65,7 @@ class Timer {
 
     // Action.
     void update_timing();
+    void update_endpoints();
 
     std::optional<float> report_at(const std::string&, Split, Tran);
     std::optional<float> report_rat(const std::string&, Split, Tran);
@@ -115,6 +116,8 @@ class Timer {
     inline auto voltage_unit() const;
     inline auto capacitance_unit() const;
     inline std::optional<float> cell_voltage() const;
+
+    inline std::optional<std::string> pin_net(std::string) const;
     
     inline const auto& primary_inputs() const;
     inline const auto& primary_outputs() const;
@@ -505,6 +508,14 @@ inline auto Timer::_remove_state(int s) {
   else {
     _state &= ~s;
   }
+}
+
+inline std::optional<std::string> Timer::pin_net(std::string name) const {
+  auto itr = _pins.find(name);
+  if(itr != _pins.end()) {
+    return itr->second._net->name();
+  }
+  return std::nullopt;
 }
 
 };  // end of namespace ot ------------------------------------------------------------------------

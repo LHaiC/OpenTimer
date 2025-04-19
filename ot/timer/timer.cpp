@@ -991,6 +991,11 @@ void Timer::update_timing() {
   _update_timing();
 }
 
+void Timer::update_endpoints() {
+  std::scoped_lock lock(_mutex);
+  _update_endpoints();
+}
+
 // Function: _update_timing
 void Timer::_update_timing() {
   
